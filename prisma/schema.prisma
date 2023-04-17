@@ -18,7 +18,7 @@ model User {
   emailVerified DateTime @default(now())
   hashedPassword String?
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
   favoriteIds String[] @db.ObjectId
 
   accounts Account[]
