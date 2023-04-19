@@ -19,6 +19,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
+
+  console.log(currentUser);
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
@@ -31,7 +33,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar />
+            <Avatar src={currentUser?.image} />
           </div>
         </div>
       </div>
