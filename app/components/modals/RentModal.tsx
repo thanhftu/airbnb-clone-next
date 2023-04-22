@@ -14,6 +14,7 @@ import CountrySelect from "../inputs/CountrySelect";
 import dynamic from "next/dynamic";
 import Counter from "../inputs/Counter";
 import ImageUpload from "../inputs/ImageUpload";
+import Input from "../inputs/Input";
 
 enum STEPS {
   CATEGORY = 0,
@@ -200,17 +201,66 @@ function RentModal() {
     );
   }
 
+  if (step === STEPS.DESCRIPTION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="How would you describe your place"
+          subtitle="Short and sweet work best!"
+        />
+        <Input
+          id="title"
+          label="Title"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+        <hr />
+        <Input
+          id="description"
+          label="Description"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+      </div>
+    );
+  }
+
+  if (step === STEPS.PRICE) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Now, set your price"
+          subtitle="How much do your charge per night?"
+        />
+        <Input
+          id="price"
+          label="Price"
+          formatPrice
+          type="number"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+      </div>
+    );
+  }
+
   return (
     <Modal
       disabled={isLoading}
       isOpen={rentModal.isOpen}
-      onSubmit={onNext}
+      //   onSubmit={onNext}
       title="Airbnb your home!"
       body={bodyContent}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
-      //   onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit)}
       onClose={rentModal.onClose}
     />
   );
