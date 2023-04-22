@@ -26,7 +26,7 @@ const ListingCard: React.FC<ListingCardPops> = ({
   actionId = "",
   disabled,
 }) => {
-  //   console.log(data);
+  console.log(data);
   const { getByValue } = useCountries();
   const location = getByValue(data.locationValue);
   const price = useMemo(() => {
