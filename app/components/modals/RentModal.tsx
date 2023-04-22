@@ -10,6 +10,8 @@ import { toast } from "react-hot-toast";
 import Heading from "../Heading";
 import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
+import CountrySelect from "../inputs/CountrySelect";
+import dynamic from "next/dynamic";
 
 enum STEPS {
   CATEGORY = 0,
@@ -53,6 +55,14 @@ function RentModal() {
   const roomCount = watch("roomCount");
   const bathroomCount = watch("bathroomCount");
   const imageSrc = watch("imageSrc");
+
+  const Map = useMemo(
+    () =>
+      dynamic(() => import("../Map"), {
+        ssr: false,
+      }),
+    [location]
+  );
 
   const actionLabel = useMemo(() => {
     if (step === STEPS.PRICE) {
@@ -125,15 +135,33 @@ function RentModal() {
       </div>
     </div>
   );
+  if (step === STEPS.LOCATION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Where is your place located?"
+          subtitle="Help guest find you!"
+        />
+        <CountrySelect
+          value={location}
+          onChange={(value) => setCustomValue("location", value)}
+        />
+        <Map center={location?.latlng} />
+      </div>
+    );
+  }
 
   return (
     <Modal
       disabled={isLoading}
       isOpen={rentModal.isOpen}
+      onSubmit={onNext}
       title="Airbnb your home!"
       body={bodyContent}
       actionLabel={actionLabel}
-      onSubmit={handleSubmit(onSubmit)}
+      secondaryActionLabel={secondaryActionLabel}
+      secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
+      //   onSubmit={handleSubmit(onSubmit)}
       onClose={rentModal.onClose}
     />
   );

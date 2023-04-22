@@ -43,6 +43,7 @@ const Modal: React.FC<ModalProps> = ({
       onClose();
     }, 300);
   }, [disabled, onClose]);
+
   const handleSubmit = useCallback(() => {
     if (disabled) {
       return;
