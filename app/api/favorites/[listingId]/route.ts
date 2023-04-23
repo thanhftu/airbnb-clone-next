@@ -11,8 +11,7 @@ export async function POST(request: Request, { params }: { params: IParams }) {
     return NextResponse.error();
   }
   const { listingId } = params;
-  //   console.log(params, "param");
-  //   console.log(listingId, "listing id");
+
   if (!listingId || typeof listingId !== "string") {
     throw new Error("Invalid Listing ID");
   }
